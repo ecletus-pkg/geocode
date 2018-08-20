@@ -9,7 +9,7 @@ import (
 
 	"github.com/aghape/aghape"
 	"github.com/aghape/aghape/db"
-	"github.com/aghape/aghape/helpers"
+	"github.com/aghape/helpers"
 	"github.com/moisespsena-go/aorm"
 )
 
@@ -42,7 +42,7 @@ func LoadData() *Data {
 
 func Import(db *aorm.DB, ret bool) (string, error) {
 	data := LoadData()
-	key, err := helpers.CheckReturnError(func() (key string, err error) {
+	key, _, err := helpers.CheckReturnError(func() (key string, err error) {
 		for i, v := range data.CdhCountryCodes {
 			err = db.Create(v).Error
 			if err != nil {
