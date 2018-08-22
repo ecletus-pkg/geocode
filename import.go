@@ -7,8 +7,8 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/aghape/aghape"
-	"github.com/aghape/aghape/db"
+	"github.com/aghape/core"
+	"github.com/aghape/core/db"
 	"github.com/aghape/helpers"
 	"github.com/moisespsena-go/aorm"
 )
@@ -85,7 +85,7 @@ func Import(db *aorm.DB, ret bool) (string, error) {
 	return key, err
 }
 
-func ImportPGSQLData(r *qor.RawDB) (key string, err error) {
+func ImportPGSQLData(r *core.RawDB) (key string, err error) {
 	key = "qor/db.common.geocode.data.ImportPGSQLData"
 	k := key
 	fmt.Printf("%v: importing data.\n", key)

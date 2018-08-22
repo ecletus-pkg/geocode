@@ -1,11 +1,11 @@
 package geocode
 
 import (
-	"github.com/aghape/aghape"
+	"github.com/aghape/core"
 	"github.com/aghape/helpers"
 )
 
-func Migrate(DB *qor.DB) error {
+func Migrate(DB *core.DB) error {
 	db, rawDB := DB.DB, DB.Raw
 	return helpers.CheckReturnE(
 		func() (key string, err error) {
