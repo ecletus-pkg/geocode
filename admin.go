@@ -10,7 +10,7 @@ func InitResource(Admin *admin.Admin) *admin.Resource {
 	res := Admin.AddResource(&GeoCodeCountry{}, &admin.Config{
 		Invisible: true,
 		Setup: func(res *admin.Resource) {
-			res.Layouts["basic"].Prepare = func(r resource.Resourcer, context *core.Context) {
+			res.Layouts["basic"].PrepareFunc = func(r resource.Resourcer, context *core.Context) {
 				context.DB = context.DB.Select("id, code2, name, alt_names")
 			}
 			res.IndexAttrs(res.IndexAttrs(), "-Regions")
