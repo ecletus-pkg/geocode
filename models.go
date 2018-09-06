@@ -34,7 +34,7 @@ func (c *GeoCodeCountry) Stringify() string {
 type GeoCodeRegion struct {
 	ID        string          `gorm:"size:255;primary_key"`
 	CountryID string          `gorm:"size:10;index"`
-	Country   *GeoCodeCountry `json:"-"`
+	Country   *GeoCodeCountry `json:"-" gorm:"preload:*"`
 	Name      string          `gorm:"size:255;index"`
 	AltNames  string          `gorm:"size:255"`
 	Level     string          `gorm:"size:50;index"`
