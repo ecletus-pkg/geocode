@@ -1,0 +1,9 @@
+GeoCodeRegion:
+  Regions:
+    label*:
+      p: Regiões
+      s: Região
+GeoCodeCountry:
+  label*:
+    p: Países
+    s: País

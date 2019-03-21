@@ -1,17 +1,26 @@
 package geocode
 
 import (
+	"github.com/go-errors/errors"
+	"github.com/moisespsena-go/aorm"
+	"github.com/moisespsena/go-assetfs/assetfsapi"
+
 	"github.com/aghape/core"
 	"github.com/aghape/helpers"
 )
 
-func Migrate(DB *core.DB) error {
-	db, rawDB := DB.DB, DB.Raw
+func Migrate(DB *aorm.DB) error {
 	return helpers.CheckReturnE(
 		func() (key string, err error) {
-			return "MigrateModels", db.AutoMigrate(&GeoCodeCdhCountryCode{}, &GeoCodeCdhStateCode{}, &GeoCodeCountry{},
+			return "MigrateModels", DB.AutoMigrate(&GeoCodeCdhCountryCode{}, &GeoCodeCdhStateCode{}, &GeoCodeCountry{},
 				&GeoCodeRegion{}).Error
 		},
+	)
+}
+
+func MigrateRaw(fs assetfsapi.Interface, DB *core.RawDB) error {
+	db := DB.DB.DB
+	return helpers.CheckReturnE(
 		func() (key string, err error) {
 			var (
 				v       int
@@ -22,7 +31,16 @@ func Migrate(DB *core.DB) error {
 				return country.TableName() + ".Count", err
 			}
 			if v == 0 {
-				return ImportPGSQLData(rawDB)
+				dialect := db.Dialect().GetName()
+				key = "import:" + dialect
+				switch dialect {
+				case "postgres":
+					err = Importer(DB, fs, dialect)
+				case "sqlite", "sqlite3":
+					err = Importer(DB, fs, "sqlite")
+				default:
+					err = errors.New("invalid dialect")
+				}
 			}
 			return
 		},

@@ -40,6 +40,10 @@ type GeoCodeRegion struct {
 	Level     string          `gorm:"size:50;index"`
 }
 
+func (*GeoCodeRegion) GetGormInlinePreloadFields() []string {
+	return []string{"*", "Country"}
+}
+
 func (c *GeoCodeRegion) GetID() string {
 	if c == nil {
 		return ""

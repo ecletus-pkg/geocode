@@ -3,14 +3,20 @@ package geocode
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"path"
 	"runtime"
+
+	"github.com/moisespsena/go-default-logger"
+
+	"github.com/moisespsena/go-assetfs/assetfsapi"
 
 	"github.com/aghape/core"
 	"github.com/aghape/core/db"
 	"github.com/aghape/helpers"
 	"github.com/moisespsena-go/aorm"
+	"github.com/moisespsena/go-error-wrap"
 )
 
 type Data struct {
@@ -85,21 +91,43 @@ func Import(db *aorm.DB, ret bool) (string, error) {
 	return key, err
 }
 
-func ImportPGSQLData(r *core.RawDB) (key string, err error) {
-	key = "qor/db.common.geocode.data.ImportPGSQLData"
-	k := key
-	fmt.Printf("%v: importing data.\n", key)
-	defer func() {
-		fmt.Printf("%v: importing data done.\n", k)
-	}()
-	_, filename, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("No caller information")
+func Importer(r *core.RawDB, fs assetfsapi.Interface, dir string) (err error) {
+	logger := defaultlogger.NewLogger(PKG)
+	linfo := func(msg string, args ...interface{}) {
+		logger.Infof("%v: %v", dir, fmt.Sprintf(msg, args...))
 	}
-	dir := path.Dir(filename)
-	filename = path.Join(dir, "data-pgsql.sql")
-	r.With(func(con db.RawDBConnection) {
-		con.In().Write([]byte(fmt.Sprintf("\\i '%v'\n", filename)))
+	lerr := func(msg string, args ...interface{}) {
+		logger.Errorf("%v: %v", dir, fmt.Sprintf(msg, args...))
+	}
+	glob := fs.NewGlobString("db/" + dir + "/*.sql")
+	files, err := glob.SortedInfos()
+	if err != nil {
+		return errwrap.Wrap(err, "List files")
+	}
+	r.Do(func(con db.RawDBConnection) {
+		defer func() {
+			linfo("done")
+		}()
+		for _, f := range files {
+			linfo("importing %q.", f.Name())
+			r, err := f.Reader()
+			if err != nil {
+				lerr("create reader failed: %v", err)
+			} else {
+				buf := make([]byte, 1024*1024)
+				var n int
+				for err == nil {
+					if n, err = r.Read(buf); err == nil {
+						if _, err = con.In().Write(buf[0:n]); err != nil {
+							lerr("write failed: %v", err)
+						}
+					} else if err != io.EOF {
+						lerr("read failed: %v", err)
+					}
+				}
+				linfo("%q done.", f.Name())
+			}
+		}
 	})
-	return "", nil
+	return
 }

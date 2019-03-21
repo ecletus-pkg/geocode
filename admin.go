@@ -4,6 +4,7 @@ import (
 	"github.com/aghape/admin"
 	"github.com/aghape/core"
 	"github.com/aghape/core/resource"
+	"github.com/aghape/roles"
 )
 
 const (
@@ -13,16 +14,23 @@ const (
 
 func InitResource(Admin *admin.Admin) *admin.Resource {
 	res := Admin.AddResource(&GeoCodeCountry{}, &admin.Config{
-		Invisible: true,
+		Invisible:  true,
+		Permission: roles.Allow(roles.Read),
 		Setup: func(res *admin.Resource) {
 			res.GetAdminLayout(resource.BASIC_LAYOUT).PrepareFunc = func(crud *resource.CRUD) *resource.CRUD {
 				return crud.SetDB(crud.DB().Select("id, code2, name, alt_names"))
 			}
 			res.IndexAttrs(res.IndexAttrs(), "-Regions")
+			res.SearchAttrs("ID", "Name", "AltNames", "Code2", "Code3")
 			//res.ShowAttrs(res.ShowAttrs(), "-Regions")
 		},
 	})
-	res.AddResource(&admin.SubConfig{FieldName: "Regions"}, &GeoCodeRegion{})
+	res.AddResource(&admin.SubConfig{FieldName: "Regions"}, &GeoCodeRegion{}, &admin.Config{
+		Permission: roles.Allow(roles.Read),
+		Setup: func(res *admin.Resource) {
+			res.SearchAttrs("Name")
+		},
+	})
 	return res
 }
 
@@ -55,7 +63,14 @@ func InitRegionMeta(res *admin.Resource, regionMeta ...*admin.Meta) (country, re
 			if recorde == nil {
 				return nil
 			}
-			if regionRecorde := region.Value(context, recorde).(*GeoCodeRegion); regionRecorde != nil {
+			if v := region.Value(context, recorde); v != nil {
+				regionRecorde := v.(*GeoCodeRegion)
+				if regionRecorde.Country == nil {
+					var c GeoCodeCountry
+					crud := countryRes.CrudDB(context.Site.GetSystemDB().DB)
+					crud.FindOne(&c, regionRecorde.CountryID)
+					regionRecorde.Country = &c
+				}
 				return regionRecorde.Country
 			}
 			return nil
