@@ -1,9 +1,9 @@
 package geocode
 
 import (
-	"github.com/aghape-pkg/admin"
-	"github.com/aghape/db"
-	"github.com/aghape/plug"
+	"github.com/ecletus-pkg/admin"
+	"github.com/ecletus/db"
+	"github.com/ecletus/plug"
 	"github.com/moisespsena/go-assetfs/assetfsapi"
 	"github.com/moisespsena/go-pluggable"
 )

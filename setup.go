@@ -5,8 +5,8 @@ import (
 	"github.com/moisespsena-go/aorm"
 	"github.com/moisespsena/go-assetfs/assetfsapi"
 
-	"github.com/aghape/core"
-	"github.com/aghape/helpers"
+	"github.com/ecletus/core"
+	"github.com/ecletus/helpers"
 )
 
 func Migrate(DB *aorm.DB) error {

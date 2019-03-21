@@ -12,9 +12,9 @@ import (
 
 	"github.com/moisespsena/go-assetfs/assetfsapi"
 
-	"github.com/aghape/core"
-	"github.com/aghape/core/db"
-	"github.com/aghape/helpers"
+	"github.com/ecletus/core"
+	"github.com/ecletus/core/db"
+	"github.com/ecletus/helpers"
 	"github.com/moisespsena-go/aorm"
 	"github.com/moisespsena/go-error-wrap"
 )
