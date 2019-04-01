@@ -8,7 +8,7 @@ import (
 	"path"
 	"runtime"
 
-	"github.com/moisespsena/go-default-logger"
+	"github.com/moisespsena-go/default-logger"
 
 	"github.com/moisespsena/go-assetfs/assetfsapi"
 
