@@ -16,7 +16,7 @@ import (
 	"github.com/ecletus/core/db"
 	"github.com/ecletus/helpers"
 	"github.com/moisespsena-go/aorm"
-	"github.com/moisespsena/go-error-wrap"
+	"github.com/moisespsena-go/error-wrap"
 )
 
 type Data struct {
