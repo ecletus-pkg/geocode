@@ -3,7 +3,7 @@ package geocode
 import (
 	"github.com/go-errors/errors"
 	"github.com/moisespsena-go/aorm"
-	"github.com/moisespsena/go-assetfs/assetfsapi"
+	"github.com/moisespsena-go/assetfs/assetfsapi"
 
 	"github.com/ecletus/core"
 	"github.com/ecletus/helpers"

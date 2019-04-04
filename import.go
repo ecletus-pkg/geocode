@@ -10,7 +10,7 @@ import (
 
 	"github.com/moisespsena-go/default-logger"
 
-	"github.com/moisespsena/go-assetfs/assetfsapi"
+	"github.com/moisespsena-go/assetfs/assetfsapi"
 
 	"github.com/ecletus/core"
 	"github.com/ecletus/core/db"

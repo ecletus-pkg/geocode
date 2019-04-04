@@ -4,8 +4,8 @@ import (
 	"github.com/ecletus-pkg/admin"
 	"github.com/ecletus/db"
 	"github.com/ecletus/plug"
-	"github.com/moisespsena/go-assetfs/assetfsapi"
-	"github.com/moisespsena/go-pluggable"
+	"github.com/moisespsena-go/assetfs/assetfsapi"
+	"github.com/moisespsena-go/pluggable"
 )
 
 type Plugin struct {
