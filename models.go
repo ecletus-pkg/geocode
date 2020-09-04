@@ -1,29 +1,33 @@
 package geocode
 
-import "strings"
+import (
+	"strings"
 
-type GeoCodeCountry struct {
-	ID       string           `gorm:"size:10;primary_key"`
-	Name     string           `gorm:"index;size:255"`
-	AltNames string           `gorm:"size:255"`
-	Code2    string           `gorm:"index;size:2"`
-	Code3    string           `gorm:"index;size:3"`
-	Regions  []*GeoCodeRegion `gorm:"foreignkey:CountryID"`
+	"github.com/moisespsena-go/aorm"
+)
+
+type Country struct {
+	ID       string    `aorm:"size:10;primary_key"`
+	Name     string    `aorm:"index;size:255"`
+	AltNames string    `aorm:"size:255"`
+	Code2    string    `aorm:"index;size:2"`
+	Code3    string    `aorm:"index;size:3"`
+	Regions  []*Region `aorm:"foreignkey:CountryID"`
 }
 
-func (c *GeoCodeCountry) GetIcon() string {
+func (c *Country) GetIcon() string {
 	return "http://www.geonames.org/flags/x/" + strings.ToLower(c.Code2) + ".gif"
 }
 
-func (c *GeoCodeCountry) GetID() string {
-	return c.ID
+func (c *Country) GetID() aorm.ID {
+	return aorm.IdOf(c)
 }
 
-func (c *GeoCodeCountry) BasicLabel() string {
+func (c *Country) BasicLabel() string {
 	return c.Name
 }
 
-func (c *GeoCodeCountry) Stringify() string {
+func (c *Country) Stringify() string {
 	v := c.Name
 	if c.AltNames != "" {
 		v += " (" + c.AltNames + ")"
@@ -31,27 +35,27 @@ func (c *GeoCodeCountry) Stringify() string {
 	return v
 }
 
-type GeoCodeRegion struct {
-	ID        string          `gorm:"size:255;primary_key"`
-	CountryID string          `gorm:"size:10;index"`
-	Country   *GeoCodeCountry `json:"-" gorm:"preload:*"`
-	Name      string          `gorm:"size:255;index"`
-	AltNames  string          `gorm:"size:255"`
-	Level     string          `gorm:"size:50;index"`
+type Region struct {
+	ID        string   `aorm:"size:255;primary_key"`
+	CountryID string   `aorm:"size:10;index"`
+	Country   *Country `json:"-" aorm:"preload:*"`
+	Name      string   `aorm:"size:255;index"`
+	AltNames  string   `aorm:"size:255"`
+	Level     string   `aorm:"size:50;index"`
 }
 
-func (*GeoCodeRegion) GetGormInlinePreloadFields() []string {
+func (*Region) GetAormInlinePreloadFields() []string {
 	return []string{"*", "Country"}
 }
 
-func (c *GeoCodeRegion) GetID() string {
+func (c *Region) GetID() aorm.ID {
 	if c == nil {
-		return ""
+		return nil
 	}
-	return c.ID
+	return aorm.IdOf(c)
 }
 
-func (c *GeoCodeRegion) Stringify() string {
+func (c *Region) Stringify() string {
 	v := c.Name
 	if c.AltNames != "" {
 		v += " (" + c.AltNames + ")"
@@ -59,31 +63,31 @@ func (c *GeoCodeRegion) Stringify() string {
 	return v
 }
 
-type GeoCodeCdhCountryCode struct {
-	Code2           string `gorm:"size:2;primary_key"`
-	CountryName     string `gorm:"size:255"`
-	AltNames        string `gorm:"size:255"`
-	Code3           string `gorm:"size:3"`
+type CdhCountryCode struct {
+	Code2           string `aorm:"size:2;primary_key"`
+	CountryName     string `aorm:"size:255"`
+	AltNames        string `aorm:"size:255"`
+	Code3           string `aorm:"size:3"`
 	IsoCc           int
-	FipsCode        string `gorm:"size:10"`
-	FipsCountryName string `gorm:"size:50"`
-	UnRegion        string `gorm:"size:50"`
-	UnSubRegion     string `gorm:"size:50"`
+	FipsCode        string `aorm:"size:10"`
+	FipsCountryName string `aorm:"size:50"`
+	UnRegion        string `aorm:"size:50"`
+	UnSubRegion     string `aorm:"size:50"`
 	CdhID           int
-	Comments        string `gorm:"size:255"`
-	Lat             string `gorm:"size:10"`
-	Lng             string `gorm:"size:10"`
+	Comments        string `aorm:"size:255"`
+	Lat             string `aorm:"size:10"`
+	Lng             string `aorm:"size:10"`
 }
 
-type GeoCodeCdhStateCode struct {
-	CountryID    string `gorm:"size:5"`
-	CountryName  string `gorm:"size:255"`
-	CountryCode2 string `gorm:"size:2"`
-	CountryCode3 string `gorm:"size:3"`
-	AltNames     string `gorm:"size:255"`
-	Subdiv       string `gorm:"size:10"`
-	SubdivID     string `gorm:"size:10;primary_key"`
-	LevelName    string `gorm:"size:255"`
-	SubdivName   string `gorm:"size:255"`
-	SubdivStar   string `gorm:"size:255"`
+type CdhStateCode struct {
+	CountryID    string `aorm:"size:5"`
+	CountryName  string `aorm:"size:255"`
+	CountryCode2 string `aorm:"size:2"`
+	CountryCode3 string `aorm:"size:3"`
+	AltNames     string `aorm:"size:255"`
+	Subdiv       string `aorm:"size:10"`
+	SubdivID     string `aorm:"size:10;primary_key"`
+	LevelName    string `aorm:"size:255"`
+	SubdivName   string `aorm:"size:255"`
+	SubdivStar   string `aorm:"size:255"`
 }

@@ -1,4 +1,4 @@
-INSERT INTO geo_code_countries (id, name, alt_names, code2, code3) VALUES
+INSERT INTO geocode_countries (id, name, alt_names, code2, code3) VALUES
   ('4', 'Afghanistan', ' Afghanistan, Afganistán', 'AF', 'AFG'),
   ('8', 'Albania', 'Albania, Albanien, Albanie', 'AL', 'ALB'),
   ('10', 'Antarctica', 'Antarctica, Antarktis, Antarctique, Antártida', 'AQ', 'ATA'),

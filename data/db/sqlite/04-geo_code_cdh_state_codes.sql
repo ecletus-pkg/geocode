@@ -1,4 +1,4 @@
-INSERT INTO geo_code_cdh_state_codes
+INSERT INTO geocode_cdh_state_codes
   ("country_id","country_name","country_code2","country_code3","alt_names","subdiv","subdiv_id","level_name","subdiv_name","subdiv_star")
   VALUES
   ('2', 'Afghanistan', 'AF', 'AFG', 'Badaẖšan', 'AF-BDS', '12267', 'Province', 'Badakhshān', 'AF-BDS*'),

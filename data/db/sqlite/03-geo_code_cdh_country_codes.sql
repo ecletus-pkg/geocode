@@ -1,4 +1,4 @@
-INSERT INTO geo_code_cdh_country_codes ("code2","country_name","alt_names","code3","iso_cc","fips_code","fips_country_name","un_region","un_sub_region","cdh_id","comments","lat","lng")
+INSERT INTO geocode_cdh_country_codes ("code2","country_name","alt_names","code3","iso_cc","fips_code","fips_country_name","un_region","un_sub_region","cdh_id","comments","lat","lng")
  VALUES
   ('AF', 'Afghanistan', ' Afghanistan, Afganistán', 'AFG', 4, 'AF', 'Afghanistan', 'Asia', 'Southern Asia', 2, '', '33 00 N', '65 00 E'),
   ('AL', 'Albania', 'Albania, Albanien, Albanie', 'ALB', 8, 'AL', 'Albania', 'Europe', 'Southern Europe', 4, 'Wikipedia: Introduced in 2006. AL- is part of the postcode.', '41 00 N', '20 00 E'),

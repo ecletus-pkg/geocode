@@ -16,10 +16,10 @@ SET row_security = off;
 SET search_path = public, pg_catalog;
 
 --
--- Data for Name: geo_code_cdh_country_codes; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: geocode_cdh_country_codes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY geo_code_cdh_country_codes (code2, country_name, alt_names, code3, iso_cc, fips_code, fips_country_name, un_region, un_sub_region, cdh_id, comments, lat, lng) FROM stdin;
+COPY geocode_cdh_country_codes (code2, country_name, alt_names, code3, iso_cc, fips_code, fips_country_name, un_region, un_sub_region, cdh_id, comments, lat, lng) FROM stdin;
 AF	Afghanistan	 Afghanistan, Afganistán	AFG	4	AF	Afghanistan	Asia	Southern Asia	2		33 00 N	65 00 E
 AL	Albania	Albania, Albanien, Albanie	ALB	8	AL	Albania	Europe	Southern Europe	4	Wikipedia: Introduced in 2006. AL- is part of the postcode.	41 00 N	20 00 E
 DZ	Algeria	Algeria, Algerien, Algérie, Argelia	DZA	12	AG	Algeria	Africa	Northern Africa	5		28 00 N	3 00 E
@@ -273,10 +273,10 @@ AX	Åland Islands		ALA	248			Europe	Northern Europe	3
 
 
 --
--- Data for Name: geo_code_cdh_state_codes; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: geocode_cdh_state_codes; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY geo_code_cdh_state_codes (country_id, country_name, country_code2, country_code3, alt_names, subdiv, subdiv_id, level_name, subdiv_name, subdiv_star) FROM stdin;
+COPY geocode_cdh_state_codes (country_id, country_name, country_code2, country_code3, alt_names, subdiv, subdiv_id, level_name, subdiv_name, subdiv_star) FROM stdin;
 2	Afghanistan	AF	AFG	Badaẖšan	AF-BDS	12267	Province	Badakhshān	AF-BDS*
 2	Afghanistan	AF	AFG	Baghlan, Baghlān, Baglan	AF-BGL	12268	Province	Baghlān	AF-BGL*
 2	Afghanistan	AF	AFG	Balkh	AF-BAL	12273	Province	Balkh	AF-BAL*
@@ -5179,10 +5179,10 @@ COPY geo_code_cdh_state_codes (country_id, country_name, country_code2, country_
 
 
 --
--- Data for Name: geo_code_countries; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: geocode_countries; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY geo_code_countries (id, name, alt_names, code2, code3) FROM stdin;
+COPY geocode_countries (id, name, alt_names, code2, code3) FROM stdin;
 4	Afghanistan	 Afghanistan, Afganistán	AF	AFG
 8	Albania	Albania, Albanien, Albanie	AL	ALB
 10	Antarctica	Antarctica, Antarktis, Antarctique, Antártida	AQ	ATA
@@ -5436,10 +5436,10 @@ COPY geo_code_countries (id, name, alt_names, code2, code3) FROM stdin;
 
 
 --
--- Data for Name: geo_code_regions; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: geocode_regions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY geo_code_regions (id, country_id, name, alt_names, level) FROM stdin;
+COPY geocode_regions (id, country_id, name, alt_names, level) FROM stdin;
 AD-02	20	Canillo		Parish
 AD-03	20	Encamp		Parish
 AD-04	20	La Massana		Parish

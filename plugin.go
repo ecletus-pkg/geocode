@@ -21,10 +21,7 @@ func (p *Plugin) OnRegister() {
 	})
 	db.Events(p).
 		DBOnMigrate(func(e *db.DBEvent) (err error) {
-			if err = Migrate(e.DB.DB); err == nil {
-				err = MigrateRaw(p.fs, e.DB.Raw)
-			}
-			return
+			return Migrate(e.DB.DB, p.fs)
 		})
 	admin_plugin.Events(p).InitResources(func(e *admin_plugin.AdminEvent) {
 		InitResource(e.Admin)

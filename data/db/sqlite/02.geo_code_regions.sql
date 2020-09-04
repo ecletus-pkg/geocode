@@ -1,4 +1,4 @@
-INSERT INTO geo_code_regions ("id", "country_id", "name", "alt_names", "level") VALUES
+INSERT INTO geocode_regions ("id", "country_id", "name", "alt_names", "level") VALUES
   ('AD-02', '20', 'Canillo', '', 'Parish'),
   ('AD-03', '20', 'Encamp', '', 'Parish'),
   ('AD-04', '20', 'La Massana', '', 'Parish'),
